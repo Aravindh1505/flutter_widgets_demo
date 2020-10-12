@@ -55,13 +55,36 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Container(
+        margin: EdgeInsets.all(10),
+        padding: EdgeInsets.all(10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             CommonTextField(StringConstants.USERNAME, usernameController),
             CommonTextField(StringConstants.PASSWORD, passwordController),
+            SizedBox(
+              height: 20,
+            ),
             CommonButton(StringConstants.SUBMIT, buttonSubmit),
             CommonText(username),
+            Image.network(
+              'https://picsum.photos/id/237/200/300',
+              height: 200,
+              width: 200,
+              fit: BoxFit.cover,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes
+                        : null,
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
